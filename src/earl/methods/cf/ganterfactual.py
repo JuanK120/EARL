@@ -37,7 +37,7 @@ from src.earl.methods.abstract_method import AbstractMethod
 
 class GANterfactual(AbstractMethod):
     def __init__(self, env, bb_model, dataset_size=int(5e5), num_features=10, training_timesteps=int(5e3),
-                 batch_size=512, domains=None, dataset_path='datasets/ganterfactual_data', params=None):
+                 batch_size=512, domains=None, dataset_path='datasets/ganterfactual_data', model_save_path= os.path.join('citibikes', 'trained_models', 'ganterfactual'), params=None):
         super().__init__()
 
         if params is None:
@@ -64,7 +64,7 @@ class GANterfactual(AbstractMethod):
 
         self.label_mapping = self.get_label_mapping()
 
-        self.model_save_path = os.path.join('citibikes', 'trained_models', 'ganterfactual')
+        self.model_save_path = model_save_path
 
         self.generator_path = os.path.join(self.model_save_path, '{}-G.ckpt'.format(training_timesteps))
 
@@ -78,7 +78,7 @@ class GANterfactual(AbstractMethod):
     def generate_domains(self, env):
         action = env.action_space.sample()
 
-        if isinstance(action, int):
+        if isinstance(action, (int, np.integer, np.int64)):
             return np.arange(env.action_space.n)
         elif isinstance(action, np.ndarray) and len(action.shape) == 1:
             ns = [list(np.arange(0, env.action_space[i].n)) for i in range(len(env.action_space))]

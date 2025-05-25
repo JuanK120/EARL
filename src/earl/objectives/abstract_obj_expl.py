@@ -28,6 +28,10 @@ class AbstractObjective:
         elif isinstance(action, int):
             action_type = 'discrete'
             action_size = 1
+        elif isinstance(action, np.integer):
+            action= int(action)
+            action_type = 'discrete'
+            action_size = 1
         else:
             raise ValueError('Only Discrete and MultiDiscrete action spaces are supported')
 
@@ -104,7 +108,7 @@ class AbstractObjective:
 
         return len(actions) * 1.0 / self.horizon
 
-    def calculate_stochastic_properties(self, fact, actions, bb_model, first_state, first_env_state):
+    def calculate_stochastic_properties(self, fact, actions, bb_model, first_state, first_env_state ):
         ''' Calculates all properties that rely on stochastic simulations '''
 
         n_sim = self.n_sim
@@ -115,11 +119,11 @@ class AbstractObjective:
 
         exceptionallities = []
 
-        for s in range(n_sim):
-            randomseed = int(datetime.now().timestamp())
-            self.env.reset(randomseed)
-
+        for s in range(n_sim): 
+            self.env.reset()
+ 
             self.env.set_nonstoch_state(first_state, first_env_state)
+
 
             fid = 1.0
             exc = 0.0

@@ -3,6 +3,8 @@ name = "earl"
 version = "0.0.1"
 authors = [
   {name="Jasmina Gajcin", email="gajcinj@tcd.ie" }
+  {name="Juan C. Rosero", email="roserolj@tcd.ie" }
+  {name="Ivana Dusparic", email="duspari@tcd.ie" }
 ]
 description = "A small example package"
 readme = "README.md"

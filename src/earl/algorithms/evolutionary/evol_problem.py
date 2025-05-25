@@ -17,7 +17,7 @@ class EvolutionaryProblem(Problem):
         fitnesses = []
         constraints = []
         for solution in x:
-            f, c = self.fitness_func(solution.squeeze())
+            f, c = self.fitness_func(solution.squeeze() )
             fitnesses.append(f)
             constraints.append(c)
 

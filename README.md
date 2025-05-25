@@ -28,7 +28,7 @@ python >= 3.8
 git clone git@github.com:anonymous902109/earl.git
 conda create -n earl python=3.8
 conda activate earl
-pip install -r requirements  
+pip install -r requirements.txt  
 
 ```
 

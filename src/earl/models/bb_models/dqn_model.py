@@ -10,10 +10,17 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 
 class DQNModel:
 
-    def __init__(self, env, model_path, params={}):
+    def __init__(self, env, model_path, arch=[128, 128], training_timesteps=int(1e5), lr=1e-3,
+                 batch_size=128, gamma=0.9,  verbose=0, exploration_fraction=0.5):
         self.model_path = model_path
-        self.env = env
-        self.params = params
+        self.env = env 
+        self.arch = arch 
+        self.training_timesteps = training_timesteps
+        self.lr = lr
+        self.batch_size = batch_size
+        self.gamma = gamma
+        self.verbose = verbose
+        self.exploration_fraction = exploration_fraction
 
         self.model = self.load_model(self.model_path, env)
 
@@ -33,19 +40,19 @@ class DQNModel:
             n_env = DummyVecEnv([lambda: n_env])
             model = DQN('MlpPolicy',
                         n_env,
-                        policy_kwargs=dict(net_arch=self.params['arch']),
-                        learning_rate=self.params['lr'],
+                        policy_kwargs=dict(net_arch=self.arch),
+                        learning_rate=self.lr,
                         buffer_size=15000,
                         learning_starts=200,
                         batch_size=512,
-                        gamma=self.params['gamma'],
+                        gamma=self.gamma,
                         train_freq=1,
                         gradient_steps=1,
                         target_update_interval=10,
-                        exploration_fraction=self.params['exploration_fraction'],
+                        exploration_fraction=self.exploration_fraction,
                         verbose=1)
 
-            model.learn(total_timesteps=self.params['training_timesteps'])
+            model.learn(total_timesteps=self.training_timesteps)
             model.save(model_path)
 
         return model

@@ -1,5 +1,7 @@
 import copy
 
+import numpy as np
+
 from src.earl.objectives.abstract_obj_expl import AbstractObjective
 
 
@@ -21,7 +23,11 @@ class CfExplObj(AbstractObjective):
 
     def validity(self, target_action, obs):
         ''' Evaluates validity based on the outcome '''
-        valid_outcome = tuple(self.bb_model.predict(obs)) != target_action # For now -- valid if the action is different from the original action
+        action = self.bb_model.predict(obs)
+        if isinstance(action, (np.integer, int)):
+            valid_outcome = action != target_action  # For now -- valid if the action is different from the original action
+        else:
+            valid_outcome = tuple(self.bb_model.predict(obs)) != target_action
         # IMPORTANT: return 1 if the class has not changed -- to be compatible with minimization used by NSGA
         return not valid_outcome
 
@@ -42,7 +48,8 @@ class CfExplObj(AbstractObjective):
                                                                                         actions,
                                                                                         self.bb_model,
                                                                                         first_state,
-                                                                                        first_env_state)
+                                                                                        first_env_state, 
+                                                                                        )
         reachability = self.reachability(actions)
         for cf in cfs:
             cf[1].update({'reachability': reachability, 'uncertainty': stochasticity})

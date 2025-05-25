@@ -1,0 +1,50 @@
+==================== Evaluating explanations ====================
+
+----------------- Evaluating coverage -----------------
+
+     Algorithm      |    Coverage (%)    |
+------------------------------------------
+   ganterfactual    |        88.0        |
+   raccer_advance   |        88.0        |
+   raccer_rewind    |        88.0        |
+     raccer_hts     |        97.0        |
+
+
+----------------- Evaluating generation time -----------------
+
+     Algorithm      |Generation Time (s) |
+------------------------------------------
+   ganterfactual    |     0.0006511      |
+   raccer_advance   |       42.62        |
+   raccer_rewind    |       113.4        |
+     raccer_hts     |       584.7        |
+
+
+----------------- Evaluating feature-similarity metrics -----------------
+
+     Algorithm      |     Proximity      |      Sparsity      |
+   ganterfactual    |       0.4711       |       0.6918       |
+   raccer_advance   |       0.4636       |       0.5874       |
+   raccer_rewind    |       0.4505       |       0.5911       |
+     raccer_hts     |       0.4568       |       0.2735       |
+
+----------------- Evaluating plausibility -----------------
+
+     Algorithm      |Plausible explanations (%)|
+------------------------------------------
+   ganterfactual    |        76.0        |
+   raccer_advance   |       100.0        |
+   raccer_rewind    |       100.0        |
+     raccer_hts     |       100.0        |
+
+
+----------------- Evaluating diversity -----------------
+
+     Algorithm      |Number of explanations| Feature Diversity  |
+---------------------------------------------------------------
+   ganterfactual    |       1.136        |        0.0         |
+   raccer_advance   |       1.136        |       1.672        |
+   raccer_rewind    |       1.136        |       1.622        |
+     raccer_hts     |       1.021        |       30.79        |
+
+
