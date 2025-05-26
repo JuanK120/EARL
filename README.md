@@ -31,6 +31,10 @@ This library has been evaluated in the CitiBikes simulation environment, a self-
 
     `docker build -t earl .`
 
+   Or Pull the docker image from dockerhub: 
+
+   `docker pull juanrosero/earl-rl:latest`
+
     Once built, you can run the citibikes experiment by running:
 
     `docker run -it --rm earl`
