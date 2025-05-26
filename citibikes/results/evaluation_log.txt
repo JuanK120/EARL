@@ -4,47 +4,47 @@
 
      Algorithm      |    Coverage (%)    |
 ------------------------------------------
-   ganterfactual    |        88.0        |
-   raccer_advance   |        88.0        |
-   raccer_rewind    |        88.0        |
-     raccer_hts     |        97.0        |
+   ganterfactual    |        99.0        |
+     raccer_hts     |        99.0        |
+   raccer_advance   |        99.0        |
+   raccer_rewind    |        99.0        |
 
 
 ----------------- Evaluating generation time -----------------
 
      Algorithm      |Generation Time (s) |
 ------------------------------------------
-   ganterfactual    |     0.0006511      |
-   raccer_advance   |       42.62        |
-   raccer_rewind    |       113.4        |
-     raccer_hts     |       584.7        |
+   ganterfactual    |     0.0007901      |
+     raccer_hts     |       191.6        |
+   raccer_advance   |        37.7        |
+   raccer_rewind    |       76.63        |
 
 
 ----------------- Evaluating feature-similarity metrics -----------------
 
      Algorithm      |     Proximity      |      Sparsity      |
-   ganterfactual    |       0.4711       |       0.6918       |
-   raccer_advance   |       0.4636       |       0.5874       |
-   raccer_rewind    |       0.4505       |       0.5911       |
-     raccer_hts     |       0.4568       |       0.2735       |
+   ganterfactual    |       0.5671       |       0.6876       |
+     raccer_hts     |       0.5567       |       0.3113       |
+   raccer_advance   |       0.5666       |        0.57        |
+   raccer_rewind    |       0.5596       |       0.5934       |
 
 ----------------- Evaluating plausibility -----------------
 
      Algorithm      |Plausible explanations (%)|
 ------------------------------------------
-   ganterfactual    |        76.0        |
+   ganterfactual    |        81.0        |
+     raccer_hts     |       100.0        |
    raccer_advance   |       100.0        |
    raccer_rewind    |       100.0        |
-     raccer_hts     |       100.0        |
 
 
 ----------------- Evaluating diversity -----------------
 
      Algorithm      |Number of explanations| Feature Diversity  |
 ---------------------------------------------------------------
-   ganterfactual    |       1.136        |        0.0         |
-   raccer_advance   |       1.136        |       1.672        |
-   raccer_rewind    |       1.136        |       1.622        |
-     raccer_hts     |       1.021        |       30.79        |
+   ganterfactual    |        1.0        |        1.0         |
+     raccer_hts     |        1.0        |        0.0         |
+   raccer_advance   |        1.0        |        0.0         |
+   raccer_rewind    |        1.0        |       5.196        |
 
 

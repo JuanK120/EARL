@@ -186,23 +186,14 @@ def create_clean_test_set(dataset_path, samples_per_domain):
 
 
 def _generate_set(size, path, env, agent, agent_type, domains, noop_range, epsilon):
-    try :
-        obs, _ = env.reset(int(datetime.timestamp(datetime.now())*10000))
-    except: 
-        obs, _ = env.reset()
+    obs, _ = env.reset(int(datetime.timestamp(datetime.now())*10000))
     # not using a for loop because the step counter should only be increased
     # if the frame is actually saved as a training sample
     step = 0
 
     action = env.action_space.sample()
 
-    print("ACTION SPACE TYPE =", type(env.action_space))
-    print("ACTION SPACE SAMPLE =", env.action_space.sample())
-    print("ACTION SPACE SAMPLE TYPE =", type(env.action_space.sample()))
-
-    
-
-    if isinstance(action, (int, np.integer, np.int64)):
+    if isinstance(action, (int, np.int64, np.integer)):
         # for discrete spaces
         observations = {action: [] for action in domains}
     elif isinstance(action, np.ndarray) and len(action.shape) == 1:
@@ -226,7 +217,7 @@ def _generate_set(size, path, env, agent, agent_type, domains, noop_range, epsil
                 if isinstance(obs, list):
                     obs = np.array(obs)
 
-                if isinstance(action, (int, np.integer, np.int64)):
+                if isinstance(action, (int, np.int64, np.integer)):
                     # for discrete actions
                     if action in domains:
                         observations[action].append(obs.reshape((1, -1)).squeeze())

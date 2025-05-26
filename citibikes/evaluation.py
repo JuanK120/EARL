@@ -98,7 +98,8 @@ def evaluate_plausibility(env, eval_path, method_names, log_print):
         df = pd.read_csv(df_path, header=0)
         if len(df) > 0:
             df['plausible'] = df.apply(lambda x: env.realistic(ast.literal_eval(x['explanation'])), axis=1)
-            satisfied = sum(df['plausible']) 
+            satisfied = sum(df['plausible'])
+            total = len(df)
         printout += '{: ^20}'.format(method_name) + '|' + \
                     '{: ^20.4}'.format(satisfied / (total) * 100) + '|' + '\n'
     log_print(printout + '\n')

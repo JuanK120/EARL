@@ -23,11 +23,11 @@ class CfExplObj(AbstractObjective):
 
     def validity(self, target_action, obs):
         ''' Evaluates validity based on the outcome '''
-        action = self.bb_model.predict(obs)
-        if isinstance(action, (np.integer, int)):
-            valid_outcome = action != target_action  # For now -- valid if the action is different from the original action
-        else:
-            valid_outcome = tuple(self.bb_model.predict(obs)) != target_action
+        action = self.bb_model.predict(obs) 
+        if isinstance(action, (np.ndarray,list)):
+            valid_outcome = tuple(action) != target_action # For now -- valid if the action is different from the original action
+        elif isinstance(action, (int, np.int64, np.integer)):
+            valid_outcome = action != target_action
         # IMPORTANT: return 1 if the class has not changed -- to be compatible with minimization used by NSGA
         return not valid_outcome
 
@@ -48,8 +48,7 @@ class CfExplObj(AbstractObjective):
                                                                                         actions,
                                                                                         self.bb_model,
                                                                                         first_state,
-                                                                                        first_env_state, 
-                                                                                        )
+                                                                                        first_env_state)
         reachability = self.reachability(actions)
         for cf in cfs:
             cf[1].update({'reachability': reachability, 'uncertainty': stochasticity})

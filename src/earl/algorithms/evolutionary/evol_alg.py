@@ -35,15 +35,12 @@ class EvolutionaryAlg:
 
     def determine_n_var(self, env, horizon):
         action = env.action_space.sample()
-        print(action, " is int: ", isinstance(action, int), " type: ", type(action))
+
         if isinstance(action, np.ndarray):
             n_var = len(action) * horizon
             self.xl = self.xl * horizon
             self.xu = self.xu * horizon
-        elif isinstance(action, int):
-            n_var = horizon
-        elif isinstance(action, np.integer):
-            action= int(action)
+        elif isinstance(action, (int, np.int64, np.integer)):
             n_var = horizon
         else:
             raise ValueError('Only Discrete and MultiDiscrete action spaces are supported')

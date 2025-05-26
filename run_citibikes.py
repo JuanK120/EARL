@@ -33,21 +33,20 @@ def main():
 
     domains = list({tuple(bb_model.predict(f.state)) for f in sl_facts}.union({tuple(f.target_action) for f in sl_facts}))
 
-    RACCER_HTS = RACCERHTS(env, bb_model, horizon, n_expand=15, max_level=horizon, n_iter=200)
+    RACCER_HTS = RACCERHTS(env, bb_model, horizon, n_expand=20, max_level=horizon, n_iter=300)
     RACCER_Advance = NSGARaccerAdvance(env, bb_model, horizon=horizon, n_gen=24, pop_size=25, xl=[0, 0, 0], xu=[4, 4, 9])
     RACCER_Rewind = NSGARaccerRewind(env, bb_model, horizon=horizon, n_gen=24, pop_size=50, xl=[0, 0, 0], xu=[4, 4, 9])
 
     rl_methods = [RACCER_HTS, RACCER_Advance, RACCER_Rewind, ]
-    rl_eval_paths = ['raccer_hts', 'raccer_advance', 'raccer_rewind', ]
+    rl_eval_paths = ['raccer_hts', 'raccer_advance', 'raccer_rewind',]
 
-    for i, m in enumerate(rl_methods):
+    """for i, m in enumerate(rl_methods):
         record = []
         print('Running {}'.format(rl_eval_paths[i]))
 
         for f in tqdm(rl_facts):
             start = time.time()
-            action = f.target_action
-            cfs = m.explain(f, target=action)
+            cfs = m.explain(f, target=f.target_action)
             end = time.time()
             if len(cfs):
                 print('Generated {} cfs'.format(len(cfs)))
@@ -55,7 +54,7 @@ def main():
                     record.append((list(f.state), list(cf.cf), end-start))
 
         record_df = pd.DataFrame(record, columns=['fact', 'explanation', 'gen_time'])
-        record_df.to_csv('citibikes/results/{}.csv'.format(rl_eval_paths[i]), index=False)
+        record_df.to_csv('citibikes/results/{}.csv'.format(rl_eval_paths[i]), index=False)"""
 
     ganterfactual = GANterfactual(env,
                                   bb_model,
@@ -70,7 +69,7 @@ def main():
     sl_methods = [ganterfactual]
     sl_eval_paths = ['ganterfactual']
 
-    for i, m in enumerate(sl_methods):
+    """for i, m in enumerate(sl_methods):
         record = []
         print('Running {}'.format(sl_eval_paths[i]))
 
@@ -79,15 +78,14 @@ def main():
             # choose one target action randomly as long as it's
             # different than the one being chosen by the agent
             target_action = random.choice([a for a in domains if a != f.target_action])
-            cfs = m.explain(f, target=target_action)
+            cfs = m.explain(f, target=tuple(target_action))
             end = time.time()
             for cf in cfs:
                 record.append((list(f.state), list(cf), end-start))
 
-        record_df = pd.DataFrame(record, columns=['fact', 'explanation','gen_time'])
-        record_df.to_csv('citibikes/results/{}.csv'.format(sl_eval_paths[i]), index=False)
- 
-    rl_eval_paths = ['raccer_advance', 'raccer_rewind', 'raccer_hts']
+        record_df = pd.DataFrame(record, columns=['fact', 'explanation', 'gen_time'])
+        record_df.to_csv('citibikes/results/{}.csv'.format(sl_eval_paths[i]), index=False)"""
+
     evaluate_explanations(env, 'citibikes/results/', sl_eval_paths + rl_eval_paths, N_TEST=100)
 
 if __name__ == '__main__':
