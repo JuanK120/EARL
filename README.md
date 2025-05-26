@@ -10,7 +10,7 @@ This library has been evaluated in the CitiBikes simulation environment, a self-
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/<your-repo>/EARL.git
+   git clone https://github.com/JuanK120/ACSOS2025/ EARL
    cd EARL
    ```
 
