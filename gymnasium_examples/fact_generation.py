@@ -71,7 +71,8 @@ def get_facts(env, bb_model, horizon=10, perc=0.1, n_states=100):
         obs, _ = env.reset()
         prev_states = []
         actions = []
-        prev_states.append(obs)
+        prev_states.append(obs)        
+        count = 0 
 
         while not done:
             action = bb_model.predict(obs)
@@ -91,6 +92,7 @@ def get_facts(env, bb_model, horizon=10, perc=0.1, n_states=100):
             obs, rew, done, trunc, info = env.step(action)
             if not done:
                 prev_states.append(obs)
+            count+=1
 
     # select random subset of facts
     collect_facts = list(zip(sl_facts, rl_facts))
@@ -98,6 +100,7 @@ def get_facts(env, bb_model, horizon=10, perc=0.1, n_states=100):
     collect_facts = random.sample(collect_facts, n_states)
     sl_facts, rl_facts = zip(*collect_facts)  # separate the pairs
 
+    print('Total number of states: ', count)
     print('Collected {} important states.'.format(len(sl_facts)))
     return sl_facts, rl_facts
 

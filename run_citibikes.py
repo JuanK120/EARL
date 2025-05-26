@@ -40,7 +40,7 @@ def main():
     rl_methods = [RACCER_HTS, RACCER_Advance, RACCER_Rewind, ]
     rl_eval_paths = ['raccer_hts', 'raccer_advance', 'raccer_rewind',]
 
-    """for i, m in enumerate(rl_methods):
+    for i, m in enumerate(rl_methods):
         record = []
         print('Running {}'.format(rl_eval_paths[i]))
 
@@ -54,7 +54,7 @@ def main():
                     record.append((list(f.state), list(cf.cf), end-start))
 
         record_df = pd.DataFrame(record, columns=['fact', 'explanation', 'gen_time'])
-        record_df.to_csv('citibikes/results/{}.csv'.format(rl_eval_paths[i]), index=False)"""
+        record_df.to_csv('citibikes/results/{}.csv'.format(rl_eval_paths[i]), index=False)
 
     ganterfactual = GANterfactual(env,
                                   bb_model,
@@ -69,7 +69,7 @@ def main():
     sl_methods = [ganterfactual]
     sl_eval_paths = ['ganterfactual']
 
-    """for i, m in enumerate(sl_methods):
+    for i, m in enumerate(sl_methods):
         record = []
         print('Running {}'.format(sl_eval_paths[i]))
 
@@ -84,7 +84,7 @@ def main():
                 record.append((list(f.state), list(cf), end-start))
 
         record_df = pd.DataFrame(record, columns=['fact', 'explanation', 'gen_time'])
-        record_df.to_csv('citibikes/results/{}.csv'.format(sl_eval_paths[i]), index=False)"""
+        record_df.to_csv('citibikes/results/{}.csv'.format(sl_eval_paths[i]), index=False)
 
     evaluate_explanations(env, 'citibikes/results/', sl_eval_paths + rl_eval_paths, N_TEST=100)
 
