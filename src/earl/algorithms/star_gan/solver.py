@@ -21,6 +21,9 @@ class Solver(object):
 
         self.g_optimizer = torch.optim.Adam(self.G.parameters(), self.g_lr, [self.beta1, self.beta2])
         self.d_optimizer = torch.optim.Adam(self.D.parameters(), self.d_lr, [self.beta1, self.beta2])
+        
+        self.G.apply(self.weights_init)
+        self.D.apply(self.weights_init)
 
         self.G.to(self.device)
         self.D.to(self.device)
@@ -89,6 +92,13 @@ class Solver(object):
         self.build_model()
         if self.use_tensorboard:
             self.build_tensorboard()
+
+    def weights_init(self, m):
+        if isinstance(m, torch.nn.Conv2d) or isinstance(m, torch.nn.Linear):
+            torch.nn.init.xavier_uniform_(m.weight)
+            if m.bias is not None:
+                torch.nn.init.zeros_(m.bias)
+
 
     def print_network(self, model, name):
         """Print out the network information."""
@@ -231,6 +241,8 @@ class Solver(object):
                     d_loss += self.lambda_cls * d_loss_cls + self.lambda_gp * d_loss_gp
                 self.reset_grad()
                 d_loss.backward()
+                torch.nn.utils.clip_grad_norm_(self.G.parameters(), max_norm=1.0)
+                torch.nn.utils.clip_grad_norm_(self.D.parameters(), max_norm=1.0)
                 self.d_optimizer.step()
 
                 # Logging.

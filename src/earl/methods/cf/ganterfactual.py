@@ -72,6 +72,8 @@ class GANterfactual(AbstractMethod):
             self.generator = Generator(image_size=self.num_features, c_dim=self.nb_domains)
             self.generator.eval()
             self.generator.load_state_dict(torch.load(self.generator_path))
+            print("Ganterfactual model Loaded")
+
         except FileNotFoundError:
             self.run_ganterfactual()
 
@@ -128,15 +130,23 @@ class GANterfactual(AbstractMethod):
 
         # rounding for categorical features
         discrete_feature_ids = [i for i, c in enumerate(self.params.columns) if c in self.params.categorical_features]
-        cf = [round(feature) if i in discrete_feature_ids else feature for i, feature in enumerate(cf)]
 
+        if any(np.isnan(x) for x in cf):
+            print("NaN found in CF:", cf)
+
+        cf = [round(feature) if i in discrete_feature_ids else feature for i, feature in enumerate(cf)]
+        
         return [cf]
 
     def generate_counterfactual(self, fact, target, nb_domains):
         # convert target class to onehot
+        #print(nb_domains)
         onehot_target_class = np.zeros(nb_domains, dtype=int)
         onehot_target_class[target] = 1
-        onehot_target_class = torch.tensor([onehot_target_class])
+        onehot_target_class = torch.tensor([onehot_target_class], dtype=torch.float32)
+        #print(onehot_target_class, fact)
+
+
 
         # generate counterfactual
         counterfactual = self.generator.double()(fact, onehot_target_class)

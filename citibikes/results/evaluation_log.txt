@@ -14,7 +14,7 @@
 
      Algorithm      |Generation Time (s) |
 ------------------------------------------
-   ganterfactual    |     0.0007901      |
+   ganterfactual    |     0.0004663      |
      raccer_hts     |       191.6        |
    raccer_advance   |        37.7        |
    raccer_rewind    |       76.63        |
@@ -23,7 +23,7 @@
 ----------------- Evaluating feature-similarity metrics -----------------
 
      Algorithm      |     Proximity      |      Sparsity      |
-   ganterfactual    |       0.5671       |       0.6876       |
+   ganterfactual    |       0.5909       |       0.7432       |
      raccer_hts     |       0.5567       |       0.3113       |
    raccer_advance   |       0.5666       |        0.57        |
    raccer_rewind    |       0.5596       |       0.5934       |
@@ -32,7 +32,7 @@
 
      Algorithm      |Plausible explanations (%)|
 ------------------------------------------
-   ganterfactual    |        81.0        |
+   ganterfactual    |        25.0        |
      raccer_hts     |       100.0        |
    raccer_advance   |       100.0        |
    raccer_rewind    |       100.0        |
@@ -42,9 +42,9 @@
 
      Algorithm      |Number of explanations| Feature Diversity  |
 ---------------------------------------------------------------
-   ganterfactual    |        1.0        |        1.0         |
-     raccer_hts     |        1.0        |        0.0         |
-   raccer_advance   |        1.0        |        0.0         |
-   raccer_rewind    |        1.0        |       5.196        |
+   ganterfactual    |        1.01        |       105.8        |
+     raccer_hts     |        1.01        |        0.0         |
+   raccer_advance   |        1.01        |        0.0         |
+   raccer_rewind    |        1.01        |       5.196        |
 
 

@@ -37,25 +37,6 @@ def main():
     RACCER_Advance = NSGARaccerAdvance(env, bb_model, horizon=horizon, n_gen=24, pop_size=25, xl=[0, 0, 0], xu=[4, 4, 9])
     RACCER_Rewind = NSGARaccerRewind(env, bb_model, horizon=horizon, n_gen=24, pop_size=50, xl=[0, 0, 0], xu=[4, 4, 9])
 
-    rl_methods = [RACCER_HTS, RACCER_Advance, RACCER_Rewind, ]
-    rl_eval_paths = ['raccer_hts', 'raccer_advance', 'raccer_rewind',]
-
-    for i, m in enumerate(rl_methods):
-        record = []
-        print('Running {}'.format(rl_eval_paths[i]))
-
-        for f in tqdm(rl_facts):
-            start = time.time()
-            cfs = m.explain(f, target=f.target_action)
-            end = time.time()
-            if len(cfs):
-                print('Generated {} cfs'.format(len(cfs)))
-                for cf in cfs:
-                    record.append((list(f.state), list(cf.cf), end-start))
-
-        record_df = pd.DataFrame(record, columns=['fact', 'explanation', 'gen_time'])
-        record_df.to_csv('citibikes/results/{}.csv'.format(rl_eval_paths[i]), index=False)
-
     ganterfactual = GANterfactual(env,
                                   bb_model,
                                   batch_size=64,
@@ -85,6 +66,27 @@ def main():
 
         record_df = pd.DataFrame(record, columns=['fact', 'explanation', 'gen_time'])
         record_df.to_csv('citibikes/results/{}.csv'.format(sl_eval_paths[i]), index=False)
+
+    rl_methods = [RACCER_HTS, RACCER_Advance, RACCER_Rewind, ]
+    rl_eval_paths = ['raccer_hts', 'raccer_advance', 'raccer_rewind',]
+
+    """for i, m in enumerate(rl_methods):
+        record = []
+        print('Running {}'.format(rl_eval_paths[i]))
+
+        for f in tqdm(rl_facts):
+            start = time.time()
+            cfs = m.explain(f, target=f.target_action)
+            end = time.time()
+            if len(cfs):
+                print('Generated {} cfs'.format(len(cfs)))
+                for cf in cfs:
+                    record.append((list(f.state), list(cf.cf), end-start))
+
+        record_df = pd.DataFrame(record, columns=['fact', 'explanation', 'gen_time'])
+        record_df.to_csv('citibikes/results/{}.csv'.format(rl_eval_paths[i]), index=False)"""
+
+    
 
     evaluate_explanations(env, 'citibikes/results/', sl_eval_paths + rl_eval_paths, N_TEST=100)
 
